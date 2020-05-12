@@ -10,5 +10,10 @@
     "test-watch": "jest --watchAll --verbose --coverage"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
+    "net": "^1.0.2"
+  }
 }
