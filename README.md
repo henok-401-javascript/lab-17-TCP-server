@@ -6,7 +6,7 @@
 
 ### Links and Resources
 
-- [submission PR](https://github.com/henok-401-javascript/lab-16-Event-Driven-Applications/pull/2)
+- [submission PR](https://github.com/henok-401-javascript/lab-17-TCP-server/pull/2)
 
 #### How to initialize/run your application (where applicable)
 
