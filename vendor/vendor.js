@@ -8,6 +8,14 @@ socket.connect({ port: 3000, host: 'localhost' }, () => {
   console.log('TCP SERVER IS CONNECTED!!');
 });
 
+socket.on('data', (payload) => {
+  let parsedData = JSON.parse(payload.toString());
+
+  if (parsedData.event === 'delivered') {
+    console.log('Thank you for delivering order');
+  }
+});
+
 setInterval(() => {
   let Store = faker.company.companyName();
   let Id = faker.random.number();
@@ -29,7 +37,3 @@ setInterval(() => {
     })
   );
 }, 2000);
-
-socket.on('delivered', (payload) => {
-  console.log('Thank you for delivering order ', payload.Id);
-});

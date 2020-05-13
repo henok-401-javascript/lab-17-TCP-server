@@ -12,13 +12,20 @@ server.listen(PORT, () => {
 
 server.on('connection', (socket) => {
   socketPool.push(socket);
-  console.log('what does socket have', socket.address());
+  console.log('proof of connection', socket.address());
   socket.on('data', (payload) => {
-    console.log('driver request', JSON.parse(payload));
-    if (JSON.parse(payload).event && JSON.parse(payload).payload) {
+    console.log(JSON.parse(payload));
+    let parsedJson = JSON.parse(payload);
+    if (parsedJson.event && parsedJson.payload) {
       for (let i = 0; i < socketPool.length; i++) {
         socketPool[i].write(payload);
       }
+    }
+    if (parsedJson.event === 'in-transit') {
+      console.log('in-transit order', parsedJson.content);
+    }
+    if (parsedJson.event === 'delivered') {
+      console.log('delivered order', parsedJson.content);
     }
   });
 });

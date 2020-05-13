@@ -8,20 +8,21 @@ socket.connect({ port: 3000, host: 'localhost' }, () => {
 });
 
 socket.on('data', (payload) => {
-  let parsedData = JSON.parse(payload);
-  console.log('is this driver payload', parsedData);
+  let parsedData = JSON.parse(payload.toString());
+
   if (parsedData.event === 'pickup') {
+    console.log('PICKED UP ORDER NUMBER', parsedData.payload.Id);
+
     setTimeout(() => {
-      console.log('PICKED UP ORDER NUMBER', parsedData.payload.Id);
+      let newTransit = { event: 'in-transit', content: parsedData.payload.Id };
+      socket.write(JSON.stringify(newTransit));
     }, 1000);
-    socket.write(
-      JSON.stringify({ event: 'in-transit', content: parsedData.Id })
-    );
+  }
+  if (parsedData.event === 'in-transit') {
     setTimeout(() => {
+      let newData = { event: 'delivered', content: parsedData.content };
       console.log('delivered order', parsedData.payload.Id);
-      socket.write(
-        JSON.stringify({ event: 'delivered', content: parsedData.payload.Id })
-      );
+      socket.write(JSON.stringify(newData));
     }, 3000);
   }
 });
